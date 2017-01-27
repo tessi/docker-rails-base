@@ -4,7 +4,7 @@ FROM ruby:2.3.1
 ENV LANG C.UTF-8
 ENV TZ Europe/Berlin
 
-ENV PHANTOMJS_VERSION: 2.1.1
+ENV PHANTOMJS_VERSION 2.1.1
 
 RUN echo "# Upgrade apt" && \
     sed -i 's/main$/main contrib/g' /etc/apt/sources.list && \
@@ -29,8 +29,8 @@ RUN echo "# Phantomjs" && \
 
 # Configure bundler
 RUN \
-  gem update --system
-  gem install bundler
+  gem update --system && \
+  gem install bundler && \
   bundle config --global frozen 1 && \
   bundle config --global build.nokogiri --use-system-libraries
 
