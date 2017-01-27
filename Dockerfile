@@ -1,11 +1,5 @@
 FROM ruby:2.3.1
 
-# Define locale/timezone
-ENV LANG C.UTF-8
-ENV TZ Europe/Berlin
-
-ENV PHANTOMJS_VERSION 2.1.1
-
 RUN echo "# Upgrade apt" && \
     sed -i 's/main$/main contrib/g' /etc/apt/sources.list && \
     apt-get update -qy && \
@@ -15,10 +9,17 @@ RUN echo "# Upgrade apt" && \
       imagemagick libmagickwand-dev libfreetype6-dev libfreetype6 libfontconfig \
       openssl libreadline6 libreadline6-dev zlib1g zlib1g-dev libssl-dev \
       libyaml-dev libpq-dev libxml2-dev libxslt-dev libc6-dev postgresql-client \
-      libqtwebkit-dev qt4-qmake xvfb bzip2  \
+      libqtwebkit-dev qt4-qmake xvfb bzip2 locales \
       libssl-dev libxrender-dev wget && \
     apt-get clean
 
+# Define locale/timezone
+RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
+RUN locale-gen en_US.UTF-8 && \
+    dpkg-reconfigure locales
+RUN /usr/sbin/update-locale LANG=en_US.UTF-8
+
+ENV PHANTOMJS_VERSION 2.1.1
 RUN echo "# Phantomjs" && \
       mkdir -p /srv/var && \
       wget -q --no-check-certificate -O /tmp/phantomjs-$PHANTOMJS_VERSION-linux-x86_64.tar.bz2 https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-$PHANTOMJS_VERSION-linux-x86_64.tar.bz2 && \
