@@ -45,6 +45,6 @@ RUN \
 # Install bower
 RUN \
   npm install -g bower && \
-  echo '{ \"allow_root\": true }' > /root/.bowerrc
+  echo '{ "allow_root": true }' > /root/.bowerrc
 
 CMD [ "bash" ]
