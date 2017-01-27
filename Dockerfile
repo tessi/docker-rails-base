@@ -31,7 +31,6 @@ RUN echo "# Phantomjs" && \
 RUN \
   gem update --system && \
   gem install bundler && \
-  bundle config --global frozen 1 && \
   bundle config --global build.nokogiri --use-system-libraries
 
 # Install node.js
