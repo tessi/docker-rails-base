@@ -14,6 +14,9 @@ RUN echo "# Upgrade apt" && \
     apt-get clean
 
 # Define locale/timezone
+ENV DEBIAN_FRONTEND noninteractive
+ENV LC_ALL en_US.UTF-8
+ENV TZ Europe/Berlin
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 RUN locale-gen en_US.UTF-8 && \
     dpkg-reconfigure locales
